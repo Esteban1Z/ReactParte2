@@ -1,57 +1,54 @@
-import Course from './components/Course'
-
+import { useState } from 'react'
+import Note from './components/Note'
 
 const App = () => {
-  const courses = [
-    {
-      name: 'Half Stack application development',
-      id: 1,
-      parts: [
-        {
-          name: 'Fundamentals of React',
-          exercises: 10,
-          id: 1
-        },
-        {
-          name: 'Using props to pass data',
-          exercises: 7,
-          id: 2
-        },
-        {
-          name: 'State of a component',
-          exercises: 14,
-          id: 3
-        },
-        {
-          name: 'Redux',
-          exercises: 11,
-          id: 4
-        }
-      ]
-    }, 
-    {
-      name: 'Node.js',
-      id: 2,
-      parts: [
-        {
-          name: 'Routing',
-          exercises: 3,
-          id: 1
-        },
-        {
-          name: 'Middlewares',
-          exercises: 7,
-          id: 2
-        }
-      ]
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas' }
+  ]) 
+  const [newName, setNewName] = useState('')
+
+  const addName = (event) => {
+    event.preventDefault()
+    console.log('button clicked', event.target)
+    const nameObject = {
+      content: newName,   
+     }
+    setPersons(name.concat(nameObject))
+    setNewName('')
+  }
+
+  const handleNameChange = (event) => {
+    console.log(event.target.value)
+    setNewName(event.target.value)
+  }
+
+  const personsToShow = persons.map (person => {
+    return {
+      name: person.name,
+      number: person.number
     }
-  ]
+  }
+  )
+  console.log(personsToShow)
 
   return (
     <div>
-
- {courses.map(course => <Course key={course.id} course={course} />)}
+      <h2>Phonebook</h2>
+      <form onSubmit={addName} >
+        <div>
+          name: <input value={newName} onChange={handleNameChange}/>
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+      <ul>
+        {personsToShow.map(persons => persons.name)}
+      </ul>
+      <h2>Numbers</h2>
+      ...
     </div>
-    )
+  )
 }
+
 export default App
