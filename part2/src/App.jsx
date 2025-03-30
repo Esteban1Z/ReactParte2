@@ -1,52 +1,37 @@
-import { useState } from 'react'
-import Note from './components/Note'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import AddNew from './components/AddNew'
+import Contacts from './components/Contacts.jsx'
+import Filter from './components/Filter'
+import ReactDOM from "react-dom/client";
+
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
-  const [newName, setNewName] = useState('')
+  const [persons, setPersons] = useState([]) 
+  const [searchName, setSearchName] = useState('')
 
-  const addName = (event) => {
-    event.preventDefault()
-    console.log('button clicked', event.target)
-    const nameObject = {
-      content: newName,   
-     }
-    setPersons(name.concat(nameObject))
-    setNewName('')
-  }
 
-  const handleNameChange = (event) => {
-    console.log(event.target.value)
-    setNewName(event.target.value)
-  }
-
-  const personsToShow = persons.map (person => {
-    return {
-      name: person.name,
-      number: person.number
-    }
-  }
-  )
-  console.log(personsToShow)
-
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log("data personas es",response)
+        setPersons(response.data)
+        console.log('render', persons.length, 'notes')
+      })
+  }, [])
+  
+  
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName} >
-        <div>
-          name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <ul>
-        {personsToShow.map(persons => persons.name)}
-      </ul>
-      <h2>Numbers</h2>
-      ...
+      <div>
+      <Filter searchName={searchName} setSearchName={setSearchName}/>
+      </div>
+      <AddNew persons={persons} setPersons={setPersons}/>
+      <h2>Contacts</h2>
+      <Contacts searchName={searchName} persons={persons}/>
     </div>
   )
 }
