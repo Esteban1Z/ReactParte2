@@ -3,7 +3,7 @@ import axios from 'axios'
 import AddNew from './components/AddNew'
 import Contacts from './components/Contacts.jsx'
 import Filter from './components/Filter'
-import ReactDOM from "react-dom/client";
+import Notes from './components/Notes'
 
 
 const App = () => {

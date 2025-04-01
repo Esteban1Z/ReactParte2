@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import axios from 'axios'
+
+
 const AddNew = ({persons, setPersons}) => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -12,14 +15,26 @@ const AddNew = ({persons, setPersons}) => {
           number: newNumber, 
          }
          persons.map(person => person.name)
+
+
+
+           setNewName('')
+         
     
          if (persons.map(person => person.name).includes(newName)) {
           alert(`${newName} is already added to phonebook`)
           return
         }
+        axios
+        .post('http://localhost:3001/persons', nameObject)
+        .then(response => {
+        setPersons(persons.concat(response.data))
         setPersons(persons.concat(nameObject))
         setNewNumber('')
         setNewName('')
+      })
+
+
       }
     
       const handleNameChange = (event) => {
