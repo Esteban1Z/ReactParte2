@@ -3,7 +3,7 @@ import axios from 'axios'
 import AddNew from './components/AddNew'
 import Contacts from './components/Contacts.jsx'
 import Filter from './components/Filter'
-import Notes from './components/Notes'
+import noteService from './services/notes'
 
 
 const App = () => {
@@ -13,8 +13,8 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
+    noteService
+      .getAll()
       .then(response => {
         console.log("data personas es",response)
         setPersons(response.data)

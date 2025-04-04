@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-
+import noteService from "../services/notes";
 
 const AddNew = ({persons, setPersons}) => {
     const [newName, setNewName] = useState('')
@@ -10,12 +10,10 @@ const AddNew = ({persons, setPersons}) => {
         event.preventDefault()
         console.log('button clicked', event.target)
         const nameObject = {
-          id: persons.length + 1,
           name: newName,  
           number: newNumber, 
          }
          persons.map(person => person.name)
-
 
 
            setNewName('')
@@ -25,11 +23,11 @@ const AddNew = ({persons, setPersons}) => {
           alert(`${newName} is already added to phonebook`)
           return
         }
-        axios
-        .post('http://localhost:3001/persons', nameObject)
+
+        noteService
+        .create(nameObject)
         .then(response => {
         setPersons(persons.concat(response.data))
-        setPersons(persons.concat(nameObject))
         setNewNumber('')
         setNewName('')
       })
