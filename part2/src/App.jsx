@@ -22,18 +22,6 @@ const App = () => {
         console.log('render', persons.length, 'notes')
       })
   }, [])
-  
-  
-  const handleDelete = id => {
-    const person = persons.find(p => p.id === id);
-    if (window.confirm(`Delete ${person.name}?`)) {
-      noteService
-      .deletePerson(id)
-        .then(() => {
-          setPersons(persons.map(persons.filter(p => p.id !== id)));
-        })
-    }
-  }
 
   return (
     <div>
