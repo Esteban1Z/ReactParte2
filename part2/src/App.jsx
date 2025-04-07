@@ -4,6 +4,7 @@ import AddNew from './components/AddNew'
 import Contacts from './components/Contacts.jsx'
 import Filter from './components/Filter'
 import noteService from './services/notes'
+import PersonDelete from './components/delete.jsx'
 
 
 const App = () => {
@@ -23,6 +24,17 @@ const App = () => {
   }, [])
   
   
+  const handleDelete = id => {
+    const person = persons.find(p => p.id === id);
+    if (window.confirm(`Delete ${person.name}?`)) {
+      noteService
+      .deletePerson(id)
+        .then(() => {
+          setPersons(persons.map(persons.filter(p => p.id !== id)));
+        })
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -31,7 +43,8 @@ const App = () => {
       </div>
       <AddNew persons={persons} setPersons={setPersons}/>
       <h2>Contacts</h2>
-      <Contacts searchName={searchName} persons={persons}/>
+      <Contacts searchName={searchName} persons={persons} setPersons={setPersons} 
+      />
     </div>
   )
 }

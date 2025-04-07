@@ -14,23 +14,25 @@ const AddNew = ({persons, setPersons}) => {
           number: newNumber, 
          }
          persons.map(person => person.name)
-
-
-           setNewName('')
-         
-    
+        
          if (persons.map(person => person.name).includes(newName)) {
-          alert(`${newName} is already added to phonebook`)
-          return
-        }
+          window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+          const person = persons.find(p => p.name === newName);
+          axios
+          .put(`http://localhost:3001/persons/${person.id}`, nameObject)
+          .then((response) => {
+          setPersons(persons.map(p => p.id !== person.id ? p : response.data))
+          return response.data
+          })}
 
+          else {
+          
         noteService
         .create(nameObject)
         .then(response => {
         setPersons(persons.concat(response.data))
-        setNewNumber('')
-        setNewName('')
-      })
+
+      })}
 
 
       }
