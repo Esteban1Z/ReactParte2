@@ -1,4 +1,3 @@
-import noteService from "../services/notes";
 import PersonDelete from '../components/delete.jsx'
 
 const Contacts = ({ searchName, persons, setPersons}) => {

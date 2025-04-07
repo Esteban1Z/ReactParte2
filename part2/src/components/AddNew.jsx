@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import noteService from "../services/notes";
 
-const AddNew = ({persons, setPersons}) => {
+const AddNew = ({persons, setPersons, contextNotification}) => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
   
@@ -22,8 +22,10 @@ const AddNew = ({persons, setPersons}) => {
           .put(`http://localhost:3001/persons/${person.id}`, nameObject)
           .then((response) => {
           setPersons(persons.map(p => p.id !== person.id ? p : response.data))
+          contextNotification("success", `Updated ${newName}`)
           return response.data
-          })}
+          })
+        }
 
           else {
           
@@ -31,6 +33,8 @@ const AddNew = ({persons, setPersons}) => {
         .create(nameObject)
         .then(response => {
         setPersons(persons.concat(response.data))
+
+        contextNotification("success", `Added ${newName}`)
 
       })}
 
