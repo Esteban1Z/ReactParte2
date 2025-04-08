@@ -46,6 +46,7 @@ const App = () => {
       <AddNew persons={persons} setPersons={setPersons} contextNotification={contextNotification}/>
       <h2>Contacts</h2>
       <Contacts searchName={searchName} persons={persons} setPersons={setPersons} setSign={setSign}
+                setContext={setContext} contextNotification={contextNotification}
       />
     </div>
   )

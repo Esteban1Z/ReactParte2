@@ -1,6 +1,6 @@
 import noteService from "../services/notes";
 
-const PersonDelete = ({ setPersons, persons, id }) => {
+const PersonDelete = ({ setPersons, persons, id, contextNotification}) => {
   const handleDelete = () => {
     const person = persons.find(p => p.id === id);
     if (!person) return;
@@ -12,7 +12,7 @@ const PersonDelete = ({ setPersons, persons, id }) => {
         })
         .catch(err => {
           alert("Error deleting person");
-          console.error(err);
+          contextNotification("error", `Error deleting person ${person.name}`);
         });
     }
   };
